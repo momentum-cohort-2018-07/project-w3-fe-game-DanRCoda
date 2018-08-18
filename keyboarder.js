@@ -1,3 +1,5 @@
+const TICKS_PER_MOVE = 10
+
 
 
 class Game {
@@ -7,14 +9,12 @@ class Game {
     this.size = {x: this.canvas.width, y: this.canvas.height}
 
     this.player = new Player(this,{
-      
     })    
 
 
     this.ticks = 0
 
     let tick = () => {
-        this.ticks++
         this.update()
         this.draw()
         if (!this.gameOver) {
@@ -23,14 +23,16 @@ class Game {
     }
     this.tick = tick
   }
-  update() {
-    console.log('updating')
-  }
+
   draw(){
-    console.log('drawing')
+    // console.log('drawing')
     this.context.fillRect(this.size.x/2-15, 450, 15, 15)
     this.player.draw
   }
+  update() {
+    this.player.update()
+  }
+
   start(){
     this.tick()
   }
@@ -40,12 +42,40 @@ class Game {
 
 
 class Player {
-  constructor (){
-
+  constructor(game) {
+    this.center = {
+        x:  this.size/ 2 - 10,
+        y: 450
+    }
+    this.playerSize = {
+        x: 20,
+        y: 20
+    }
+    
+    this.keyboarder = new Keyboarder()
+    this.game = game
   }
+
+  draw () {
+    this.context.fillRect(this.center.x, this.center.y, this.playerSize.x,
+      this.playerSize.y)
+  }
+
+update() {
+  if
+  (this.keyboarder.isDown(Keyboarder.KEYS.LEFT)) {
+    this.center.x -= 2
+    if (this.center.x <=0) this.center.x = 0
+  }
+ if (this.keyboarder.isDown(Keyboarder.KEYS.RIGHT)) {
+            this.center.x += 2
+            if (this.center.x >= 480) this.center.x = 480
+        }
+  }
+
+
+
 }
-
-
 
 
 
